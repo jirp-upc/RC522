@@ -29,8 +29,10 @@ class RubyApp < Gtk::Window
 		
 		#Creem el botó clear
 		button = Gtk::Button.new(:label => "Clear")
-		button.signal_connect("clicked") { clear }
-		grid.attach(button, 0, 1, 1, 1)
+		button.signal_connect("clicked") do
+			info_label.set_markup("Please, login with your university card")
+			rc522
+		end
 		
 		#Col·loquem la finestra al centre de la pantalla
         set_window_position(:center)   
@@ -39,17 +41,18 @@ class RubyApp < Gtk::Window
 		    
         show_all
         Gtk.main
-        
+        thr.join
         
     end
     
 
     def rc522
+	    	thr = Thread.new{
 		rf = Rfid_rc522.new
 		uid = rf.read_uid
 		@label.set_text("uid #{uid}")
 		@label.override_background_color(0 , Gdk::RGBA::new(1.0, 0, 0, 1.0)) #Color vermell
-		
+			}
 		       		
     end
     
