@@ -29,8 +29,10 @@ class RubyApp < Gtk::Window
 		
 		#Creem el botó clear
 		button = Gtk::Button.new(:label => "Clear")
-		button.signal_connect("clicked") { clear }
-		grid.attach(button, 0, 1, 1, 1)
+		button.signal_connect("clicked") do
+			info_label.set_markup("Please, login with your university card")
+			rc522
+		end
 		
 		#Col·loquem la finestra al centre de la pantalla
         set_window_position(:center)   
